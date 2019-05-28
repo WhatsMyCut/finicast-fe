@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import classSet from 'react-classset';
 import logo from './logo.svg';
 import './styles/App.scss';
 import TopNav from './components/TopNav';
-import {
-  Container,
-  Row,
-  Col,
-  Jumbotron,
-  Button
-} from 'reactstrap';
+import Dashboard from './pages/Dashboard';
+import DashboardBuilder from './pages/DashboardBuilder';
 
 
 class App extends Component {
@@ -30,37 +27,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <Router>
+        <div className="App">
+
         <TopNav />
-        <Jumbotron>
-          <Container className={"widget-drawer"} navbar>
-            <Row>
-              <Col md='2'>
-                <h2>Widgets</h2>
-                <ul className={"widget-list"}>
-                  <li>[Widget 1]</li>
-                  <li>[Widget 2]</li>
-                  <li>[Widget 3]</li>
-                </ul>
-              </Col>
-              <Col md='10'>
-                <h2>Widget Builder</h2>
-                <p>
-                  <Button
-                    tag="a"
-                    color="success"
-                    size="large"
-                    href="http://reactstrap.github.io"
-                    target="_blank"
-                  >
-                    View Reactstrap Docs
-                  </Button>
-                </p>
-              </Col>
-            </Row>
-          </Container>
-        </Jumbotron>
-      </div>
+        <Route path="/" exact component={Dashboard} />
+        <Route path="/dashbuilder/" component={DashboardBuilder} />
+        </div>
+      </Router>
     );
   }
 }
