@@ -35,7 +35,11 @@ class DashboardBuilder extends Component {
           <Col md='2' className={"widget-drawer"} >
             <h2>Widgets</h2>
             <ul className={"widget-list"}>
-              <li><Draggable><Widget type={WidgetTypes.CELL} /></Draggable></li>
+              <li>
+                <Draggable onDrop={(props) => console.log('dropped', props)}>
+                  <Widget type={WidgetTypes.CELL} />
+                </Draggable>
+              </li>
             </ul>
           </Col>
           <Col md='10' className={classSet({
@@ -45,7 +49,7 @@ class DashboardBuilder extends Component {
 
           })}>
             <h2>Dashboard Builder</h2>
-            <Grid widgetPosition={[1,3]} className={"widget-builder-grid"}/>
+            <Grid widgetposition={[1,3]} className={"widget-builder-grid"}/>
           </Col>
         </Row>
       </div>

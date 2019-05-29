@@ -12,7 +12,7 @@ export default class Widget extends Component {
     return (
       <div
         style={{
-          fontSize: 25,
+          fontSize: 36,
           fontWeight: 'bold',
         }}
       >

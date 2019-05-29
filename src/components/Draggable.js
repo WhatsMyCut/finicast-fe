@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaGripVertical } from 'react-icons/fa';
 import * as _ from 'lodash';
 
-import { DragSource, DropTarget } from 'react-dnd';
+import { DragSource } from 'react-dnd';
 
 const propTypes = {
     _id: PropTypes.string,
@@ -31,7 +31,7 @@ class Draggable extends Component {
 
       const className = 'drag-item' + ((this.state.mouseOver || (this.props.canDrop && this.props.isOver)) ? ' drag-item-highlight' : '') + statusClass;
 
-      return this.props.connectDropTarget(this.props.connectDragPreview(
+      return this.props.connectDragPreview(
         <div
           key={this.props._id}
           className={className}
@@ -43,7 +43,7 @@ class Draggable extends Component {
           {this.props.connectDragSource(<span><FaGripVertical /></span>)}{` `}
           {this.props.children}
         </div>
-      ));
+      );
     }
 }
 
@@ -56,32 +56,13 @@ Draggable.defaultProps = defaultProps;
 
 const dragSource = {
     beginDrag( props ) {
-        console.log( 'props: ', props );
+        console.log( 'beginDrag: ', props );
         return { _id: props._id };
     },
-    //endDrag( props, monitor, component ) {
-        //console.log( 'props: ', props );
-        //console.log( 'monitor.getItem(): ', monitor.getItem() );
-        //console.log( 'monitor.getDropResult(): ', monitor.getDropResult() );
-        //console.log( 'component: ', component );
-        //props.moveRow( monitor.getItem()._id, props._id, true );
-    //},
-};
-
-
-const dropTarget = {
-    drop( props, monitor ) {
-        var draggedId = monitor.getItem()._id;
-        //console.log( 'hover', draggedId, props._id );
-        if (draggedId !== props._id) {
-            props.onReorder( draggedId, props._id, true );
-        }
+    endDrag( props, monitor, component ) {
+        console.log( 'endDrag: ', props, monitor, component );
+        props.onDrop( monitor.getItem()._id, props._id, true );
     },
-    /*drop( props, monitor ) {
-        var draggedId = monitor.getItem()._id;
-        console.log( 'drop', draggedId, props._id );
-        return { _id: draggedId };
-    }*/
 };
 
 /**
@@ -95,15 +76,7 @@ function sourceCollect( connect, monitor ) {
   };
 }
 
-function targetCollect( connect, monitor ) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    canDrop: monitor.canDrop(),
-    isOver: monitor.isOver(),
-  };
-};
 
 export default _.flow(
     DragSource( 'DRAG_SOURCE', dragSource, sourceCollect ),
-    DropTarget( 'DRAG_TARGET', dropTarget, targetCollect ),
 )( Draggable );

@@ -2,14 +2,15 @@
 import React, { Component } from 'react'
 import Square from './Square'
 import Widget from '../models/Widget'
+import Droppable from '../components/Droppable';
 
 
 export default class Grid extends Component {
   constructor(props) {
     super(props)
-    this.widgetPosition = this.props.widgetPosition
+    this.widgetPosition = this.props.widgetposition
     this.squares = []
-    for (let i = 0; i < 72; i++) {
+    for (let i = 0; i < 72 ; i++) {
       this.squares.push(this.renderSquare(i, this.widgetPosition));
     }
   }
@@ -18,12 +19,14 @@ export default class Grid extends Component {
     const x = i % 12;
     const y = Math.floor(i / 9);
     const isWidgetHere = x === widgetX && y === widgetY;
-    const color = ((x + y) % 2 === 1) ? 'grey': null;
+    const color = i % 2 === 1 ? 'even' : '';
     const piece = isWidgetHere ? 'X' : null;
 
     return (
-      <div key={i} className={"grid-square"}>
-        <Square color={color}>{piece}</Square>
+      <div key={i} className={"grid-square " + color}>
+        <Droppable onMouseOver={() => console.log('hERERE')}>
+          <Square>{piece}</Square>
+        </Droppable>
       </div>
     )
   }

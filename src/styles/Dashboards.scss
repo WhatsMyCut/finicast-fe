@@ -1,6 +1,4 @@
 .widget-builder-grid {
-  border-top: 1px dotted #ccc;
-  border-left: 1px dotted #ccc;
   overflow: auto;
   display: flex;
   flex-wrap: wrap;
@@ -11,4 +9,12 @@
   height: 'auto';
   border-right: 1px dashed #ccc;
   border-bottom: 1px dashed #ccc;
+}
+
+.grid-square.even {
+  background-color: #f4f4f4;
+}
+
+.drop-item-highlight {
+  background-color:  lightblue;
 }
