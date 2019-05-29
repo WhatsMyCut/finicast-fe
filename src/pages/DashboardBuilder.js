@@ -6,6 +6,7 @@ import {
   Col,
   Button
 } from 'reactstrap';
+import Grid from '../components/Grid';
 
 class DashboardBuilder extends Component {
   constructor(props) {
@@ -23,14 +24,12 @@ class DashboardBuilder extends Component {
   render() {
     const { highlighted, hovered } = this.props;
     return (
-      <Container>
+
+      <Container className={"main-contaner"}>
         <Row>
           <Col md='2' className={"widget-drawer"} >
             <h2>Widgets</h2>
             <ul className={"widget-list"}>
-              <li>[Widget 1]</li>
-              <li>[Widget 2]</li>
-              <li>[Widget 3]</li>
             </ul>
           </Col>
           <Col md='10' className={classSet({
@@ -41,6 +40,7 @@ class DashboardBuilder extends Component {
           })}>
             <h2>Widget Builder</h2>
             <p>
+              <Grid widgetPosition={[1,3]} className={"widget-builder-grid"}/>
               <Button
                 tag="a"
                 color="success"
