@@ -3,7 +3,7 @@ import React, { Component} from 'react'
 export default class Square extends Component  {
   render () {
     const { color, children } = this.props;
-    const fill = color ? color : 'transparent'
+    const fill = color ? 'grey' : 'transparent'
     const stroke = color ? color : 'grey'
 
     return (
@@ -14,8 +14,9 @@ export default class Square extends Component  {
           width: '100%',
           height: '100%',
         }}
+        {...this.props}
       >
-        {children}
+        { children }
       </div>
     )
   }

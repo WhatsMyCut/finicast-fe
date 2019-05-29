@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import '../styles/Dashboards.scss'
 import React, { Component } from 'react';
 import classSet from 'react-classset';
 import {
@@ -28,7 +30,7 @@ class DashboardBuilder extends Component {
     const { highlighted, hovered } = this.props;
     return (
 
-      <Container className={"main-contaner"}>
+      <div className={"main-contaner"}>
         <Row>
           <Col md='2' className={"widget-drawer"} >
             <h2>Widgets</h2>
@@ -42,22 +44,11 @@ class DashboardBuilder extends Component {
             'widget-builder--hovered': hovered,
 
           })}>
-            <h2>Widget Builder</h2>
-            <p>
-              <Grid widgetPosition={[1,3]} className={"widget-builder-grid"}/>
-              <Button
-                tag="a"
-                color="success"
-                size="large"
-                href="http://reactstrap.github.io"
-                target="_blank"
-              >
-                View Reactstrap Docs
-              </Button>
-            </p>
+            <h2>Dashboard Builder</h2>
+            <Grid widgetPosition={[1,3]} className={"widget-builder-grid"}/>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 }

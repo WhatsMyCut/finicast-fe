@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import Square from './Square'
 import Widget from '../models/Widget'
@@ -8,7 +9,7 @@ export default class Grid extends Component {
     super(props)
     this.widgetPosition = this.props.widgetPosition
     this.squares = []
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < 72; i++) {
       this.squares.push(this.renderSquare(i, this.widgetPosition));
     }
   }
@@ -17,12 +18,12 @@ export default class Grid extends Component {
     const x = i % 12;
     const y = Math.floor(i / 9);
     const isWidgetHere = x === widgetX && y === widgetY;
-    const black = (x + y) % 2 === 1;
-    const piece = isWidgetHere ? <Widget /> : null;
+    const color = ((x + y) % 2 === 1) ? 'grey': null;
+    const piece = isWidgetHere ? 'X' : null;
 
     return (
-      <div key={i} style={{ width: '8%', height: '12.5%' }}>
-        <Square black={black}>{piece}</Square>
+      <div key={i} className={"grid-square"}>
+        <Square color={color}>{piece}</Square>
       </div>
     )
   }
@@ -32,10 +33,11 @@ export default class Grid extends Component {
       <div
         style={{
           width: '100%',
-          height: '100%',
+          minHeight: '80vh',
           display: 'flex',
           flexWrap: 'wrap',
         }}
+        {...this.props}
       >
         {this.squares}
       </div>
