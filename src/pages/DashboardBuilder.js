@@ -7,6 +7,9 @@ import {
   Button
 } from 'reactstrap';
 import Grid from '../components/Grid';
+import { WidgetTypes } from '../models/WidgetTypes';
+import Draggable from '../components/Draggable';
+import Widget from '../models/Widget';
 
 class DashboardBuilder extends Component {
   constructor(props) {
@@ -30,6 +33,7 @@ class DashboardBuilder extends Component {
           <Col md='2' className={"widget-drawer"} >
             <h2>Widgets</h2>
             <ul className={"widget-list"}>
+              <li><Draggable><Widget type={WidgetTypes.CELL} /></Draggable></li>
             </ul>
           </Col>
           <Col md='10' className={classSet({

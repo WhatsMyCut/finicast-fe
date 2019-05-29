@@ -1,33 +1,23 @@
-import React from 'react'
-import { DragSource } from 'react-dnd'
+import React, { Component } from 'react'
 import { WidgetTypes } from './WidgetTypes';
 
-const widgetSource = {
-  beginDrag(props) {
-    return {}
-  },
-}
+export default class Widget extends Component {
 
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
+  constructor(props) {
+    super (props);
+    this.type = WidgetTypes[props.type]
+  }
+
+  render() {
+    return (
+      <div
+        style={{
+          fontSize: 25,
+          fontWeight: 'bold',
+        }}
+      >
+        ♘ {this.type}
+      </div>
+    );
   }
 }
-
-function Widget({ connectDragSource, isDragging }) {
-  return connectDragSource(
-    <div
-      style={{
-        opacity: isDragging ? 0.5 : 1,
-        fontSize: 25,
-        fontWeight: 'bold',
-        cursor: 'move',
-      }}
-    >
-      ♘
-    </div>,
-  )
-}
-
-export default DragSource(WidgetTypes.CELL, widgetSource, collect)(Widget)
