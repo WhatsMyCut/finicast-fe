@@ -10,7 +10,7 @@ export default class Grid extends Component {
     super(props)
     this.widgetPosition = this.props.widgetposition
     this.squares = []
-    for (let i = 0; i < 72 ; i++) {
+    for (let i = 0; i < 4 ; i++) {
       this.squares.push(this.renderSquare(i, this.widgetPosition));
     }
   }
@@ -19,12 +19,15 @@ export default class Grid extends Component {
     const x = i % 12;
     const y = Math.floor(i / 9);
     const isWidgetHere = x === widgetX && y === widgetY;
-    const color = i % 2 === 1 ? 'even' : '';
+    const isEven = i % 2 === 1 ? 'even' : '';
     const piece = isWidgetHere ? 'X' : null;
 
     return (
-      <div key={i} className={"grid-square " + color}>
-        <Droppable onMouseOver={() => console.log('hERERE')}>
+      <div key={i}>
+        <Droppable
+          className={isEven}
+          onDrop={() => console.log('onDrop')}
+        >
           <Square>{piece}</Square>
         </Droppable>
       </div>

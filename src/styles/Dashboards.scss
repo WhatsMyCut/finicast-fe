@@ -11,10 +11,16 @@
   border-bottom: 1px dashed #ccc;
 }
 
-.grid-square.even {
+.even {
   background-color: #f4f4f4;
 }
 
+.drop-item {
+  display: flex;
+  flex: 1 1 8%;
+  width: 100px;
+  height: 100px;
+}
 .drop-item-highlight {
   background-color:  lightblue;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -23,19 +24,24 @@ class Droppable extends Component {
   }
 
   render() {
+    const { canDrop, isOver, connectDropTarget } = this.props;
+    console.log('over', canDrop, isOver, connectDropTarget);
     let statusClass;
     if (this.props.isSelected) statusClass = ' drop-item-selected';
     else statusClass = ' drop-item-not-selected';
 
-    const className = 'drop-item' + ((this.state.mouseOver || (this.props.canDrop && this.props.isOver)) ? ' drop-item-highlight' : '') + statusClass;
-
-    return this.props.connectDropTarget(
+    const className = 'drop-item' + ((this.state.mouseOver || (canDrop && isOver)) ? ' drop-item-highlight' : '') + statusClass;
+    const color = canDrop ? 'green': '#ccc';
+    return connectDropTarget(
       <div
         key={this.props._id}
         className={className}
+        style={{
+          border: '1px dotted ' + color,
+        }}
         onClick={this.props.onClick}
-        onMouseEnter={() => this.setState({ mouseOver: true })}
-        onMouseLeave={() => this.setState({ mouseOver: false })}
+        onMouseEnter={() => { this.setState({ mouseOver: true })}}
+        onMouseLeave={() => { this.setState({ mouseOver: false })}}
       >
         {this.props.children}
       </div>
@@ -47,24 +53,20 @@ Droppable.propTypes = propTypes;
 Droppable.defaultProps = defaultProps;
 
 const dropTarget = {
-  hover( props, monitor ) {
-    console.log( 'hover', props._id );
+  drop( props, monitor, connect ) {
     var draggedId = monitor.getItem()._id;
     if (draggedId !== props._id) {
-      props.onReorder( draggedId, props._id, true );
+      props.onDrop( monitor.getItem(), props._id, connect );
     }
   },
-  drop( props, monitor ) {
-    console.log( 'drop', props._id );
+  hover( props, monitor ) {
     var draggedId = monitor.getItem()._id;
+    // console.log( 'hover', draggedId );
     return { _id: draggedId };
   }
 };
 
 function targetCollect( connect, monitor ) {
-  if (monitor && connect) {
-    console.log('HERE', monitor)
-  }
   return {
     connectDropTarget: connect.dropTarget(),
     canDrop: monitor.canDrop(),
@@ -72,4 +74,4 @@ function targetCollect( connect, monitor ) {
   };
 };
 
-export default DropTarget( 'DROP_TARGET', dropTarget, targetCollect )( Droppable );
+export default DropTarget( 'DRAGGABLE', dropTarget, targetCollect )( Droppable );

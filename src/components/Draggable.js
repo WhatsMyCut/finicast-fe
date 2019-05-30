@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FaGripVertical } from 'react-icons/fa';
+// import { FaGripVertical } from 'react-icons/fa';
 import * as _ from 'lodash';
 
 import { DragSource } from 'react-dnd';
@@ -17,34 +17,33 @@ const defaultProps = {
 
 class Draggable extends Component {
 
-    constructor( props ) {
-        super( props );
-        this.state = {
-            mouseOver: false,
-        };
-    }
+  constructor( props ) {
+      super( props );
+      this.state = {
+        mouseOver: false,
+      };
+  }
 
-    render() {
-      let statusClass;
-      if (this.props.isSelected) statusClass = ' drag-item-selected';
-      else statusClass = ' drag-item-not-selected';
+  render() {
+    let statusClass;
+    if (this.props.isSelected) statusClass = ' drag-item-selected';
+    else statusClass = ' drag-item-not-selected';
 
-      const className = 'drag-item' + ((this.state.mouseOver || (this.props.canDrop && this.props.isOver)) ? ' drag-item-highlight' : '') + statusClass;
+    const className = 'drag-item' + ((this.state.mouseOver || (this.props.canDrop && this.props.isOver)) ? ' drag-item-highlight' : '') + statusClass;
 
-      return this.props.connectDragPreview(
-        <div
-          key={this.props._id}
-          className={className}
-          onClick={this.props.onClick}
-          onMouseEnter={() => this.setState({ mouseOver: true })}
-          onMouseLeave={() => this.setState({ mouseOver: false })}
-          style={{ borderLeft: '4px solid ' + this.props.color, cursor: 'pointer' }}
-        >
-          {this.props.connectDragSource(<span><FaGripVertical /></span>)}{` `}
-          {this.props.children}
-        </div>
-      );
-    }
+    return this.props.connectDragPreview(
+      <div
+        key={this.props._id}
+        className={className}
+        onClick={this.props.onClick}
+        onMouseEnter={() => this.setState({ mouseOver: true })}
+        onMouseLeave={() => this.setState({ mouseOver: false })}
+        style={{ cursor: 'pointer' }}
+      >
+        {this.props.connectDragSource(<div>{this.props.children}</div>)}{` `}
+      </div>
+    );
+  }
 }
 
 Draggable.propTypes = propTypes;
@@ -56,12 +55,16 @@ Draggable.defaultProps = defaultProps;
 
 const dragSource = {
     beginDrag( props ) {
-        console.log( 'beginDrag: ', props );
-        return { _id: props._id };
+      console.log( 'beginDrag: ', props );
+      return { _id: props._id };
     },
     endDrag( props, monitor, component ) {
-        console.log( 'endDrag: ', props, monitor, component );
-        props.onDrop( monitor.getItem()._id, props._id, true );
+      if (!monitor.didDrop()) {
+        return
+      };
+      console.log( 'endDrag: ', props, monitor, component );
+      props.onDrop( monitor, props._id );
+
     },
 };
 
@@ -78,5 +81,5 @@ function sourceCollect( connect, monitor ) {
 
 
 export default _.flow(
-    DragSource( 'DRAG_SOURCE', dragSource, sourceCollect ),
+  DragSource( 'DRAGGABLE', dragSource, sourceCollect ),
 )( Draggable );

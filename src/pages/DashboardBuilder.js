@@ -26,6 +26,10 @@ class DashboardBuilder extends Component {
     });
   }
 
+  placeWidget(pid, mid) {
+    console.log('placeWidget', pid, mid)
+  }
+
   render() {
     const { highlighted, hovered } = this.props;
     return (
@@ -36,7 +40,7 @@ class DashboardBuilder extends Component {
             <h2>Widgets</h2>
             <ul className={"widget-list"}>
               <li>
-                <Draggable onDrop={(props) => console.log('dropped', props)}>
+                <Draggable onDrop={this.placeWidget}>
                   <Widget type={WidgetTypes.CELL} />
                 </Draggable>
               </li>
@@ -49,7 +53,10 @@ class DashboardBuilder extends Component {
 
           })}>
             <h2>Dashboard Builder</h2>
-            <Grid widgetposition={[1,3]} className={"widget-builder-grid"}/>
+            <Grid
+              widgetposition={[1,3]}
+              className={"widget-builder-grid"}
+            />
           </Col>
         </Row>
       </div>
