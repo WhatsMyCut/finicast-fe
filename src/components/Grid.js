@@ -8,10 +8,11 @@ import Droppable from '../components/Droppable';
 export default class Grid extends Component {
   constructor(props) {
     super(props)
-    this.widgetPosition = this.props.widgetposition
+    this.geometry = this.props.geometry
+    const total = this.geometry[0] * this.geometry[1];
     this.squares = []
-    for (let i = 0; i < 4 ; i++) {
-      this.squares.push(this.renderSquare(i, this.widgetPosition));
+    for (let i = 0; i < total ; i++) {
+      this.squares.push(this.renderSquare(i, [1,3]));
     }
   }
 

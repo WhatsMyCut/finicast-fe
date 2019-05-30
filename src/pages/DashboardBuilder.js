@@ -26,8 +26,8 @@ class DashboardBuilder extends Component {
     });
   }
 
-  placeWidget(pid, mid, component) {
-    console.log('placeWidget', pid, mid, component)
+  placeWidget(props, monitor, component) {
+    console.log('placeWidget', props, monitor, component)
   }
 
   render() {
@@ -54,7 +54,7 @@ class DashboardBuilder extends Component {
           })}>
             <h2>Dashboard Builder</h2>
             <Grid
-              widgetposition={[1,3]}
+              geometry={[2,4]}
               className={"widget-builder-grid"}
             />
           </Col>
