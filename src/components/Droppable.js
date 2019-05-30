@@ -24,7 +24,11 @@ class Droppable extends Component {
 
   render() {
     const { canDrop, isOver, connectDropTarget, children } = this.props;
+<<<<<<< HEAD
     // console.log('over', canDrop, isOver, connectDropTarget);
+=======
+    console.log('over', canDrop, isOver, connectDropTarget);
+>>>>>>> a36689e57fd9a29ee7029d1be093c7f593ace11d
     let statusClass;
     if (this.props.isSelected) statusClass = ' drop-item-selected';
     else statusClass = ' drop-item-not-selected';
