@@ -55,14 +55,14 @@ Draggable.defaultProps = defaultProps;
 
 const dragSource = {
     beginDrag( props ) {
-      console.log( 'beginDrag: ', props );
+      // console.log( 'beginDrag: ', props );
       return { _id: props._id };
     },
     endDrag( props, monitor, component ) {
       if (!monitor.didDrop()) {
         return
       };
-      console.log( 'endDrag: ', props, monitor, component );
+      // console.log( 'endDrag: ', props, monitor, component );
       props.onDrop( monitor, props._id );
 
     },
