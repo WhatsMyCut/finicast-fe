@@ -26,8 +26,8 @@ class DashboardBuilder extends Component {
     });
   }
 
-  placeWidget(pid, mid) {
-    console.log('placeWidget', pid, mid)
+  placeWidget(pid, mid, component) {
+    console.log('placeWidget', pid, mid, component)
   }
 
   render() {

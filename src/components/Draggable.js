@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import { FaGripVertical } from 'react-icons/fa';
+import * as _ from 'lodash';
 
 import { DragSource } from 'react-dnd';
 
@@ -52,18 +54,18 @@ Draggable.defaultProps = defaultProps;
  */
 
 const dragSource = {
-  beginDrag( props ) {
-    // console.log( 'beginDrag: ', props );
-    return { _id: props._id };
-  },
-  endDrag( props, monitor, component ) {
-    if (!monitor.didDrop()) {
-      return
-    };
-    // console.log( 'endDrag: ', props, monitor, component );
-    props.onDrop( monitor, props._id );
+    beginDrag( props ) {
+      //console.log( 'beginDrag: ', props );
+      return { _id: props._id };
+    },
+    endDrag( props, monitor, component ) {
+      if (!monitor.didDrop()) {
+        return
+      };
+      //console.log( 'endDrag: ', props, monitor, component );
+      return props.onDrop( props, monitor, component );
 
-  },
+    },
 };
 
 /**
@@ -78,4 +80,6 @@ function sourceCollect( connect, monitor ) {
 }
 
 
-export default DragSource( 'DRAGGABLE', dragSource, sourceCollect )( Draggable );
+export default _.flow(
+  DragSource( 'DRAGGABLE', dragSource, sourceCollect ),
+)( Draggable );
