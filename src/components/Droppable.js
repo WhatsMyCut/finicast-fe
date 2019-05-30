@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -24,14 +23,14 @@ class Droppable extends Component {
   }
 
   render() {
-    const { canDrop, isOver, connectDropTarget } = this.props;
+    const { canDrop, isOver, connectDropTarget, children } = this.props;
     // console.log('over', canDrop, isOver, connectDropTarget);
     let statusClass;
     if (this.props.isSelected) statusClass = ' drop-item-selected';
     else statusClass = ' drop-item-not-selected';
 
     const className = 'drop-item' + ((this.state.mouseOver || (canDrop && isOver)) ? ' drop-item-highlight' : '') + statusClass;
-    const color = canDrop ? 'green': '#ccc';
+    const color = canDrop ? 'green': children.length ? 'red' : '#ccc';
     return connectDropTarget(
       <div
         key={this.props._id}
@@ -53,14 +52,23 @@ Droppable.propTypes = propTypes;
 Droppable.defaultProps = defaultProps;
 
 const dropTarget = {
-  drop( props, monitor, connect ) {
+  canDrop( props, monitor) {
     var draggedId = monitor.getItem()._id;
-    if (draggedId !== props._id) {
-      props.onDrop( monitor.getItem(), props._id, connect );
+    if (draggedId !== props._id && props.onCanDrop) {
+      props.onCanDrop( monitor.getItem(), props._id, );
     }
   },
-  hover( props, monitor ) {
+  drop( props, monitor, component ) {
     var draggedId = monitor.getItem()._id;
+    if (draggedId !== props._id && props.onDrop) {
+      props.onDrop( monitor.getItem(), props._id, component );
+    }
+  },
+  hover( props, monitor, component ) {
+    var draggedId = monitor.getItem()._id;
+    if (draggedId !== props._id && props.onHover) {
+      props.onHover( monitor.getItem(), props._id, component );
+    }
     // console.log( 'hover', draggedId );
     return { _id: draggedId };
   }
