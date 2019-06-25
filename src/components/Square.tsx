@@ -1,10 +1,11 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 
-export default class Square extends Component  {
-  constructor(props) {
-    super(props);
-    console.log('Square', this.props)
-  }
+export interface IProps {
+  color?: string;
+};
+
+export default class Square extends Component<IProps, {}>  {
+
   render () {
     const { color, children } = this.props;
     const fill = color ? 'grey' : 'transparent'

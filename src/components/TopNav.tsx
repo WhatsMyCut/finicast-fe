@@ -9,8 +9,14 @@ import {
   NavLink,
 } from 'reactstrap';
 
-class TopNav extends Component {
-  constructor(props) {
+export interface IProps {};
+export interface IState {
+  isOpen?: boolean;
+  navbarTitle?: string;
+}
+
+class TopNav extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {

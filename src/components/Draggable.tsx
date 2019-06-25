@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 // import { FaGripVertical } from 'react-icons/fa';
 import * as _ from 'lodash';
 
 import { DragSource } from 'react-dnd';
 
-const propTypes = {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-};
+export interface IProps {
+  _id?: string;
+  name?: string;
+  isSelected?: string;
+  connectDragPreview?: any;
+  connectDragSource?: any;
+  canDrop?: boolean;
+  isOver?: boolean;
+  onClick?: boolean;
+}
 
-const defaultProps = {
-    _id: '',
-    name: '',
-};
-
-class Draggable extends Component {
-
-  constructor( props ) {
+class Draggable extends Component<IProps, {}> {
+  state: { mouseOver: boolean; };
+  constructor( props: IProps ) {
       super( props );
       this.state = {
         mouseOver: false,
@@ -35,7 +35,7 @@ class Draggable extends Component {
       <div
         key={this.props._id}
         className={className}
-        onClick={this.props.onClick}
+        onClick={() => this.props.onClick}
         onMouseEnter={() => this.setState({ mouseOver: true })}
         onMouseLeave={() => this.setState({ mouseOver: false })}
         style={{ cursor: 'pointer' }}
@@ -46,24 +46,23 @@ class Draggable extends Component {
   }
 }
 
-Draggable.propTypes = propTypes;
-Draggable.defaultProps = defaultProps;
-
 /**
  * Implements the drag source contract.
  */
 
 const dragSource = {
-    beginDrag( props ) {
+    beginDrag( props: any ) {
       //console.log( 'beginDrag: ', props );
       return { _id: props._id };
     },
-    endDrag( props, monitor, component ) {
+    endDrag( props: any, monitor: any, component: any ) {
       if (!monitor.didDrop()) {
         return
       };
       //console.log( 'endDrag: ', props, monitor, component );
-      return props.onDrop( props, monitor, component );
+      if (props.onDrop) {
+        return props.onDrop( props, monitor, component );
+      }
 
     },
 };
@@ -71,7 +70,7 @@ const dragSource = {
 /**
  * Specifies the props to inject into your component.
  */
-function sourceCollect( connect, monitor ) {
+function sourceCollect( connect: any, monitor: any ) {
   return {
     connectDragSource: connect.dragSource(),
     connectDragPreview: connect.dragPreview(),

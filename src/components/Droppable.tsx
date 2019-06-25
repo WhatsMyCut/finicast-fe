@@ -1,22 +1,21 @@
-/* eslint-disable no-unused-vars */
+/* @typescript-eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-import { DropTarget } from 'react-dnd';
+import { DropTarget, DropTargetMonitor } from 'react-dnd';
 
-const propTypes = {
-    _id: PropTypes.string,
-    name: PropTypes.string,
-};
+export interface IProps {
+  _id?: string;
+  name?: string;
+  isSelected?: string;
+  connectDropTarget?: any;
+  canDrop?: boolean;
+  isOver?: boolean;
+  onClick?: boolean;
+}
 
-const defaultProps = {
-    _id: '',
-    name: '',
-};
-
-class Droppable extends Component {
-
-  constructor( props ) {
+class Droppable extends Component<IProps, {}> {
+  state: { mouseOver: boolean; };
+  constructor( props: IProps ) {
     super( props );
     this.state = {
       mouseOver: false,
@@ -39,7 +38,7 @@ class Droppable extends Component {
         style={{
           border: '1px dotted ' + color,
         }}
-        onClick={this.props.onClick}
+        onClick={() => this.props.onClick}
         onMouseEnter={() => { this.setState({ mouseOver: true })}}
         onMouseLeave={() => { this.setState({ mouseOver: false })}}
       >
@@ -49,24 +48,34 @@ class Droppable extends Component {
   }
 }
 
-Droppable.propTypes = propTypes;
-Droppable.defaultProps = defaultProps;
+export const dropTarget = {
+  canDrop(props: any, monitor: any) {
+    const item = monitor.getItem()
+    const tcoll = monitor.targetCollect;
+    console.log('canDrop', props, monitor, tcoll, item);
+    return true;
+  },
 
-const dropTarget = {
-  drop( props, monitor, connect ) {
-    var draggedId = monitor.getItem()._id;
-    if (draggedId !== props._id) {
-      props.onDrop( monitor.getItem(), props._id, connect );
+  drop( props: any, monitor: DropTargetMonitor, component: any ) {
+    if (monitor.didDrop()) {
+      return undefined;
+    }
+
+    console.log('drop', props, monitor, component);
+    const item = monitor.getItem()
+    var draggedId = item._id;
+    if (draggedId !== props._id && props.onDrop) {
+      props.onDrop( props, monitor, component );
     }
   },
-  hover( props, monitor ) {
+  hover( props: any, monitor: DropTargetMonitor ) {
     var draggedId = monitor.getItem()._id;
     // console.log( 'hover', draggedId );
     return { _id: draggedId };
   }
 };
 
-function targetCollect( connect, monitor ) {
+function targetCollect( connect: any, monitor:any ) {
   return {
     connectDropTarget: connect.dropTarget(),
     canDrop: monitor.canDrop(),

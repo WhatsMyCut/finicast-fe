@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/lodash": "^4.14.134",
+    "@types/node": "^12.0.10",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router-dom": "^4.3.4",
+    "@types/reactstrap": "^8.0.1",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
     "bootstrap": "^4.3.1",
     "jsondiffpatch": "^0.3.11",
     "node-sass": "^4.12.0",
@@ -15,7 +23,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-strap": "0.0.1",
-    "reactstrap": "^8.0.0"
+    "reactstrap": "^8.0.0",
+    "typescript": "^3.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

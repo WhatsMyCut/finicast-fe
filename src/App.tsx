@@ -1,22 +1,27 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import classSet from 'react-classset';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+//import logo from './logo.svg';
 import './styles/App.scss';
 import TopNav from './components/TopNav';
 import Dashboard from './pages/Dashboard';
 import DashboardBuilder from './pages/DashboardBuilder';
 
+export interface IProps {};
+export interface IState {
+  isOpen?: boolean;
+  navbarTitle?: string;
+};
 
-class App extends Component {
-  constructor(props) {
+class App extends Component<IProps, IState> {
+  state: { isOpen: false; navbarTitle: string; };
+  constructor(props: IProps, state: IState) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = {
+    this.state = {...state, ...{
       isOpen: false,
       navbarTitle: "Dashboard Builder",
-    };
+    }};
   }
 
   toggle() {

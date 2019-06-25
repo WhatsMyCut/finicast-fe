@@ -6,21 +6,35 @@ import * as _ from 'lodash';
 import { DragSource, DropTarget } from 'react-dnd';
 
 const propTypes = {
-    _id: PropTypes.string,
-    name: PropTypes.string,
+  _id: PropTypes.string,
+  name: PropTypes.string,
 };
 
 const defaultProps = {
-    _id: '',
-    name: '',
+  _id: '',
+  name: '',
 };
 
-class DragDrop extends Component {
+export interface IProps {
+  _id?: string;
+  name?: string;
+  isSelected?: boolean;
+  canDrop?: boolean;
+  isOver?: boolean;
+  connectDropTarget?: any;
+  connectDragPreview?: any;
+  onClick?: any;
+  connectDragSource?: any;
+  color?: string;
+}
 
-  constructor( props ) {
-    super( props );
+export class DragDrop extends Component<IProps, {}> {
+  state: { mouseOver: boolean; };
+
+  constructor(props: IProps) {
+    super(props);
     this.state = {
-        mouseOver: false,
+      mouseOver: false,
     };
   }
 
@@ -47,35 +61,32 @@ class DragDrop extends Component {
   }
 }
 
-DragDrop.propTypes = propTypes;
-DragDrop.defaultProps = defaultProps;
-
 /**
  * Implements the drag source contract.
  */
 
 const dragSource = {
-  beginDrag( props ) {
-      console.log( 'props: ', props );
-      return { _id: props._id };
+  beginDrag(props: any) {
+    console.log('props: ', props);
+    return { _id: props._id };
   },
   //endDrag( props, monitor, component ) {
-      //console.log( 'props: ', props );
-      //console.log( 'monitor.getItem(): ', monitor.getItem() );
-      //console.log( 'monitor.getDropResult(): ', monitor.getDropResult() );
-      //console.log( 'component: ', component );
-      //props.moveRow( monitor.getItem()._id, props._id, true );
+  //console.log( 'props: ', props );
+  //console.log( 'monitor.getItem(): ', monitor.getItem() );
+  //console.log( 'monitor.getDropResult(): ', monitor.getDropResult() );
+  //console.log( 'component: ', component );
+  //props.moveRow( monitor.getItem()._id, props._id, true );
   //},
 };
 
 
 const dropTarget = {
-  drop( props, monitor ) {
-      var draggedId = monitor.getItem()._id;
-      //console.log( 'hover', draggedId, props._id );
-      if (draggedId !== props._id) {
-          props.onReorder( draggedId, props._id, true );
-      }
+  drop(props: any, monitor: any) {
+    var draggedId = monitor.getItem()._id;
+    //console.log( 'hover', draggedId, props._id );
+    if (draggedId !== props._id) {
+      props.onReorder(draggedId, props._id, true);
+    }
   },
   /*drop( props, monitor ) {
     var draggedId = monitor.getItem()._id;
@@ -87,7 +98,7 @@ const dropTarget = {
 /**
  * Specifies the props to inject into your component.
  */
-function sourceCollect( connect, monitor ) {
+function sourceCollect(connect: any, monitor: any) {
   return {
     connectDragSource: connect.dragSource(),
     connectDragPreview: connect.dragPreview(),
@@ -95,7 +106,7 @@ function sourceCollect( connect, monitor ) {
   };
 }
 
-function targetCollect( connect, monitor ) {
+function targetCollect(connect: any, monitor: any) {
   return {
     connectDropTarget: connect.dropTarget(),
     canDrop: monitor.canDrop(),
@@ -104,6 +115,6 @@ function targetCollect( connect, monitor ) {
 };
 
 export default _.flow(
-  DragSource( 'DRAG_SOURCE', dragSource, sourceCollect ),
-  DropTarget( 'DRAG_TARGET', dropTarget, targetCollect ),
-)( DragDrop );
+  DragSource('DRAG_SOURCE', dragSource, sourceCollect),
+  DropTarget('DRAG_TARGET', dropTarget, targetCollect),
+)(DragDrop);

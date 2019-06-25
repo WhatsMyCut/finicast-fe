@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import classSet from 'react-classset';
 import {
   Container,
   Row,
   Col,
 } from 'reactstrap';
 
-class Dashboard extends Component {
-  constructor(props) {
+export interface IProps {
+  highlighted?: boolean;
+  hovered?: boolean;
+};
+
+class Dashboard extends Component<IProps, {}> {
+  constructor(props: IProps) {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
@@ -21,15 +25,11 @@ class Dashboard extends Component {
 
   render() {
     const { highlighted, hovered } = this.props;
+    console.log(highlighted, hovered);
     return (
       <Container>
         <Row>
-          <Col md='12' className={classSet({
-            'widget-builder': true,
-            'widget-builder--highlighted': highlighted,
-            'widget-builder--hovered': hovered,
-
-          })}>
+          <Col md='12' className={'someclass'}>
             <h2>Widgets</h2>
           </Col>
         </Row>
