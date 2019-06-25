@@ -11,7 +11,7 @@ export default class Widget extends Component<IProps, {}> {
 
   constructor(props: IProps) {
     super (props);
-    this.type = 'default';
+    this.type = props.type;
   }
 
   render() {

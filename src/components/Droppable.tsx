@@ -10,7 +10,7 @@ export interface IProps {
   connectDropTarget?: any;
   canDrop?: boolean;
   isOver?: boolean;
-  onClick?: boolean;
+  onDrop?: boolean;
 }
 
 class Droppable extends Component<IProps, {}> {
@@ -38,7 +38,7 @@ class Droppable extends Component<IProps, {}> {
         style={{
           border: '1px dotted ' + color,
         }}
-        onClick={() => this.props.onClick}
+        onClick={() => this.props.onDrop}
         onMouseEnter={() => { this.setState({ mouseOver: true })}}
         onMouseLeave={() => { this.setState({ mouseOver: false })}}
       >
@@ -50,22 +50,22 @@ class Droppable extends Component<IProps, {}> {
 
 export const dropTarget = {
   canDrop(props: any, monitor: any) {
-    const item = monitor.getItem()
-    const tcoll = monitor.targetCollect;
-    console.log('canDrop', props, monitor, tcoll, item);
+    // const item = monitor.getItem()
+    // const tcoll = monitor.targetCollect;
+    // console.log('canDrop', props, monitor, tcoll, item);
     return true;
   },
 
-  drop( props: any, monitor: DropTargetMonitor, component: any ) {
+  drop( props: any, monitor: any, component: any ) {
     if (monitor.didDrop()) {
       return undefined;
     }
 
-    console.log('drop', props, monitor, component);
     const item = monitor.getItem()
     var draggedId = item._id;
+    // console.log('drop', item, props, monitor, component);
     if (draggedId !== props._id && props.onDrop) {
-      props.onDrop( props, monitor, component );
+      props.onDrop( { target: monitor.targetId, id: monitor.getItem()._id, } );
     }
   },
   hover( props: any, monitor: DropTargetMonitor ) {

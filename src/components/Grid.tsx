@@ -30,14 +30,15 @@ export default class Grid extends Component<IProps, {}> {
     // const x = i % 12;
     // const y = Math.floor(i / 9);
     //const isWidgetHere = x === geometry[0] && y === geometry[1];
-    const isEven = i % 2 === 1 ? 'even' : '';
+    const isEven = i % 2 === 1 ? 'even' : 'odd';
     const piece = null;
 
     return (
       <div key={i}>
         <Droppable
           className={isEven}
-          onDrop={() => this.props.onDrop}
+          onDrop={this.props.onDrop}
+          _id={i}
         >
           <Square>{piece}</Square>
         </Droppable>

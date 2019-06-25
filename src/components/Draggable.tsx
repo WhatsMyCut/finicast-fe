@@ -18,10 +18,10 @@ export interface IProps {
 class Draggable extends Component<IProps, {}> {
   state: { mouseOver: boolean; };
   constructor( props: IProps ) {
-      super( props );
-      this.state = {
-        mouseOver: false,
-      };
+    super( props );
+    this.state = {
+      mouseOver: false,
+    };
   }
 
   render() {
@@ -51,20 +51,20 @@ class Draggable extends Component<IProps, {}> {
  */
 
 const dragSource = {
-    beginDrag( props: any ) {
-      //console.log( 'beginDrag: ', props );
-      return { _id: props._id };
-    },
-    endDrag( props: any, monitor: any, component: any ) {
-      if (!monitor.didDrop()) {
-        return
-      };
-      //console.log( 'endDrag: ', props, monitor, component );
-      if (props.onDrop) {
-        return props.onDrop( props, monitor, component );
-      }
+  beginDrag( props: any ) {
+    //console.log( 'beginDrag: ', props );
+    return { _id: props._id };
+  },
+  endDrag( props: any, monitor: any, component: any ) {
+    if (!monitor.didDrop()) {
+      return undefined;
+    };
+    if (props._id && props.onDrop) {
+      // console.log( 'endDrag.onDrop: ', props, monitor, component );
+      return props.onDrop( props );
+    }
 
-    },
+  },
 };
 
 /**
